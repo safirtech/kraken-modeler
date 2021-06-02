@@ -26,10 +26,17 @@ import UseZoomPanHelper from './UseZoomPanHelper';
 import UseUpdateNodeInternals from './UseUpdateNodeInternals';
 import Undirectional from './Undirectional';
 import MultiFlows from './MultiFlows';
+import KrakenUI from './KrakenUI'
 
+
+import 'bootswatch/dist/darkly/bootstrap.min.css';
 import './index.css';
 
 const routes = [
+  {
+    path: '/kraken',
+    component: KrakenUI,
+  },
   {
     path: '/',
     component: Overview,
@@ -128,7 +135,8 @@ const routes = [
   },
 ];
 
-const Header = withRouter(({ history, location }) => {
+const Header = withRouter(({ history, location }) =>
+{
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => history.push(event.target.value);
 
   return (

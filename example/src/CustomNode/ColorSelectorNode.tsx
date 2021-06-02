@@ -8,16 +8,19 @@ const sourceHandleStyleB: CSSProperties = { ...targetHandleStyle, bottom: 10, to
 
 const onConnect = (params: Connection | Edge) => console.log('handle onConnect', params);
 
-const ColorSelectorNode: FC<NodeProps> = ({ data }) => {
+const ColorSelectorNode: FC<NodeProps> = ({ data }) =>
+{
   return (
     <>
-      <Handle type="target" position={Position.Left} style={targetHandleStyle} onConnect={onConnect} />
+      <Handle id="in1" type="target" position={Position.Left} style={targetHandleStyle} onConnect={onConnect} />
+      <Handle id="in2" type="target" position={Position.Top} style={targetHandleStyle} onConnect={onConnect} />
+      <Handle id="in3" type="target" position={Position.Bottom} style={targetHandleStyle} onConnect={onConnect} />
       <div>
         Custom Color Picker Node: <strong>{data.color}</strong>
       </div>
       <input className="nodrag" type="color" onChange={data.onChange} defaultValue={data.color} />
-      <Handle type="source" position={Position.Right} id="a" style={sourceHandleStyleA} />
-      <Handle type="source" position={Position.Right} id="b" style={sourceHandleStyleB} />
+      <Handle type="source" position={Position.Right} id="schema1" style={sourceHandleStyleA} />
+      <Handle type="source" position={Position.Right} id="table1" style={sourceHandleStyleB} />
     </>
   );
 };

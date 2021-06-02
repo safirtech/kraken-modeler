@@ -1,6 +1,11 @@
-import ReactFlow from './container/ReactFlow';
+import ReactFlow from './container/ReactFlow'
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default ReactFlow;
+
+//import KrakenModeler from './container/KrakenModeler'
+
+export { default as KrakenModeler } from './container/KrakenModeler'
 
 export { default as Handle } from './components/Handle';
 export { default as EdgeText } from './components/Edges/EdgeText';
@@ -8,7 +13,8 @@ export { getBezierPath } from './components/Edges/BezierEdge';
 export { getSmoothStepPath } from './components/Edges/SmoothStepEdge';
 export { getMarkerEnd, getCenter as getEdgeCenter } from './components/Edges/utils';
 
-export {
+export
+{
   isNode,
   isEdge,
   removeElements,
@@ -27,7 +33,8 @@ export * from './additional-components';
 export * from './store/hooks';
 export * from './types';
 
-export { ReactFlowProps } from './container/ReactFlow';
+export { default as ReactFlow, ReactFlowProps } from './container/ReactFlow';
 export { MiniMapProps } from './additional-components/MiniMap';
 export { ControlProps } from './additional-components/Controls';
 export { BackgroundProps } from './additional-components/Background';
+export { default as Sidebar } from './additional-components/Sidebar'

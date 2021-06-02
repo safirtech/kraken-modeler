@@ -1,6 +1,6 @@
 import React, { useState, MouseEvent } from 'react';
 
-import ReactFlow, {
+import KrakenModeler, {
   removeElements,
   addEdge,
   MiniMap,
@@ -14,6 +14,7 @@ import ReactFlow, {
   Edge,
   ArrowHeadType,
   Node,
+  ReactFlow
 } from 'react-flow-renderer';
 
 import CustomEdge from './CustomEdge';
@@ -88,7 +89,8 @@ const edgeTypes: EdgeTypesType = {
   custom2: CustomEdge2,
 };
 
-const EdgesFlow = () => {
+const EdgesFlow = () =>
+{
   const [elements, setElements] = useState<Elements>(initialElements);
 
   const onElementsRemove = (elementsToRemove: Elements) => setElements((els) => removeElements(elementsToRemove, els));

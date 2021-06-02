@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
 
-import { useStoreActions, useStore } from '../../store/hooks';
+import { useStoreActions, useStore, useStoreState } from '../../store/hooks';
 import FlowRenderer from '../FlowRenderer';
 import NodeRenderer from '../NodeRenderer';
 import EdgeRenderer from '../EdgeRenderer';
@@ -11,7 +11,8 @@ import { ReactFlowProps } from '../ReactFlow';
 
 import { NodeTypesType, EdgeTypesType, ConnectionLineType, KeyCode } from '../../types';
 
-export interface GraphViewProps extends Omit<ReactFlowProps, 'onSelectionChange' | 'elements'> {
+export interface GraphViewProps extends Omit<ReactFlowProps, 'onSelectionChange' | 'elements'>
+{
   nodeTypes: NodeTypesType;
   edgeTypes: EdgeTypesType;
   selectionKeyCode: KeyCode;
@@ -93,7 +94,8 @@ const GraphView = ({
   onEdgeMouseLeave,
   edgeUpdaterRadius,
   onEdgeUpdateStart,
-}: GraphViewProps) => {
+}: GraphViewProps) =>
+{
   const isInitialized = useRef<boolean>(false);
   const setOnConnect = useStoreActions((actions) => actions.setOnConnect);
   const setOnConnectStart = useStoreActions((actions) => actions.setOnConnectStart);
@@ -112,9 +114,12 @@ const GraphView = ({
   const currentStore = useStore();
   const { zoomIn, zoomOut, zoomTo, transform, fitView, initialized } = useZoomPanHelper();
 
-  useEffect(() => {
-    if (!isInitialized.current && initialized) {
-      if (onLoad) {
+  useEffect(() =>
+  {
+    if (!isInitialized.current && initialized)
+    {
+      if (onLoad)
+      {
         onLoad({
           fitView: (params = { padding: 0.1 }) => fitView(params),
           zoomIn,
@@ -131,89 +136,118 @@ const GraphView = ({
     }
   }, [onLoad, zoomIn, zoomOut, zoomTo, transform, fitView, initialized]);
 
-  useEffect(() => {
-    if (onConnect) {
+  useEffect(() =>
+  {
+    if (onConnect)
+    {
       setOnConnect(onConnect);
     }
   }, [onConnect]);
 
-  useEffect(() => {
-    if (onConnectStart) {
+  useEffect(() =>
+  {
+    if (onConnectStart)
+    {
       setOnConnectStart(onConnectStart);
     }
   }, [onConnectStart]);
 
-  useEffect(() => {
-    if (onConnectStop) {
+  useEffect(() =>
+  {
+    if (onConnectStop)
+    {
       setOnConnectStop(onConnectStop);
     }
   }, [onConnectStop]);
 
-  useEffect(() => {
-    if (onConnectEnd) {
+  useEffect(() =>
+  {
+    if (onConnectEnd)
+    {
       setOnConnectEnd(onConnectEnd);
     }
   }, [onConnectEnd]);
 
-  useEffect(() => {
-    if (typeof snapToGrid !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof snapToGrid !== 'undefined')
+    {
       setSnapToGrid(snapToGrid);
     }
   }, [snapToGrid]);
 
-  useEffect(() => {
-    if (typeof snapGrid !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof snapGrid !== 'undefined')
+    {
       setSnapGrid(snapGrid);
     }
   }, [snapGrid]);
 
-  useEffect(() => {
-    if (typeof nodesDraggable !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof nodesDraggable !== 'undefined')
+    {
       setNodesDraggable(nodesDraggable);
     }
   }, [nodesDraggable]);
 
-  useEffect(() => {
-    if (typeof nodesConnectable !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof nodesConnectable !== 'undefined')
+    {
       setNodesConnectable(nodesConnectable);
     }
   }, [nodesConnectable]);
 
-  useEffect(() => {
-    if (typeof elementsSelectable !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof elementsSelectable !== 'undefined')
+    {
       setElementsSelectable(elementsSelectable);
     }
   }, [elementsSelectable]);
 
-  useEffect(() => {
-    if (typeof minZoom !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof minZoom !== 'undefined')
+    {
       setMinZoom(minZoom);
     }
   }, [minZoom]);
 
-  useEffect(() => {
-    if (typeof maxZoom !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof maxZoom !== 'undefined')
+    {
       setMaxZoom(maxZoom);
     }
   }, [maxZoom]);
 
-  useEffect(() => {
-    if (typeof translateExtent !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof translateExtent !== 'undefined')
+    {
       setTranslateExtent(translateExtent);
     }
   }, [translateExtent]);
 
-  useEffect(() => {
-    if (typeof nodeExtent !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof nodeExtent !== 'undefined')
+    {
       setNodeExtent(nodeExtent);
     }
   }, [nodeExtent]);
 
-  useEffect(() => {
-    if (typeof connectionMode !== 'undefined') {
+  useEffect(() =>
+  {
+    if (typeof connectionMode !== 'undefined')
+    {
       setConnectionMode(connectionMode);
     }
   }, [connectionMode]);
+
 
   return (
     <FlowRenderer

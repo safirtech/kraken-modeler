@@ -16,7 +16,8 @@ import { useStoreActions } from '../../store/hooks';
 import { Provider } from '../../contexts/NodeIdContext';
 import { NodeComponentProps, WrapNodeProps } from '../../types';
 
-export default (NodeComponent: ComponentType<NodeComponentProps>) => {
+export default (NodeComponent: ComponentType<NodeComponentProps>) =>
+{
   const NodeWrapper = ({
     id,
     type,
@@ -48,7 +49,8 @@ export default (NodeComponent: ComponentType<NodeComponentProps>) => {
     snapGrid,
     isDragging,
     resizeObserver,
-  }: WrapNodeProps) => {
+  }: WrapNodeProps) =>
+  {
     const observerInitialized = useRef<boolean>(false);
     const updateNodeDimensions = useStoreActions((actions) => actions.updateNodeDimensions);
     const addSelectedElements = useStoreActions((actions) => actions.addSelectedElements);
@@ -84,32 +86,40 @@ export default (NodeComponent: ComponentType<NodeComponentProps>) => {
         onMouseLeave,
       ]
     );
-    const onMouseEnterHandler = useMemo(() => {
-      if (!onMouseEnter || isDragging) {
+    const onMouseEnterHandler = useMemo(() =>
+    {
+      if (!onMouseEnter || isDragging)
+      {
         return;
       }
 
       return (event: MouseEvent) => onMouseEnter(event, node);
     }, [onMouseEnter, isDragging, node]);
 
-    const onMouseMoveHandler = useMemo(() => {
-      if (!onMouseMove || isDragging) {
+    const onMouseMoveHandler = useMemo(() =>
+    {
+      if (!onMouseMove || isDragging)
+      {
         return;
       }
 
       return (event: MouseEvent) => onMouseMove(event, node);
     }, [onMouseMove, isDragging, node]);
 
-    const onMouseLeaveHandler = useMemo(() => {
-      if (!onMouseLeave || isDragging) {
+    const onMouseLeaveHandler = useMemo(() =>
+    {
+      if (!onMouseLeave || isDragging)
+      {
         return;
       }
 
       return (event: MouseEvent) => onMouseLeave(event, node);
     }, [onMouseLeave, isDragging, node]);
 
-    const onContextMenuHandler = useMemo(() => {
-      if (!onContextMenu) {
+    const onContextMenuHandler = useMemo(() =>
+    {
+      if (!onContextMenu)
+      {
         return;
       }
 
@@ -117,12 +127,16 @@ export default (NodeComponent: ComponentType<NodeComponentProps>) => {
     }, [onContextMenu, node]);
 
     const onSelectNodeHandler = useCallback(
-      (event: MouseEvent) => {
-        if (!isDraggable) {
-          if (isSelectable) {
+      (event: MouseEvent) =>
+      {
+        if (!isDraggable)
+        {
+          if (isSelectable)
+          {
             unsetNodesSelection();
 
-            if (!selected) {
+            if (!selected)
+            {
               addSelectedElements(node);
             }
           }
@@ -134,16 +148,20 @@ export default (NodeComponent: ComponentType<NodeComponentProps>) => {
     );
 
     const onDragStart = useCallback(
-      (event: DraggableEvent) => {
+      (event: DraggableEvent) =>
+      {
         onNodeDragStart?.(event as MouseEvent, node);
 
-        if (selectNodesOnDrag && isSelectable) {
+        if (selectNodesOnDrag && isSelectable)
+        {
           unsetNodesSelection();
 
-          if (!selected) {
+          if (!selected)
+          {
             addSelectedElements(node);
           }
-        } else if (!selectNodesOnDrag && !selected && isSelectable) {
+        } else if (!selectNodesOnDrag && !selected && isSelectable)
+        {
           unsetNodesSelection();
           addSelectedElements([]);
         }
@@ -152,8 +170,10 @@ export default (NodeComponent: ComponentType<NodeComponentProps>) => {
     );
 
     const onDrag = useCallback(
-      (event: DraggableEvent, draggableData: DraggableData) => {
-        if (onNodeDrag) {
+      (event: DraggableEvent, draggableData: DraggableData) =>
+      {
+        if (onNodeDrag)
+        {
           node.position.x += draggableData.deltaX;
           node.position.y += draggableData.deltaY;
           onNodeDrag(event as MouseEvent, node);
@@ -172,11 +192,14 @@ export default (NodeComponent: ComponentType<NodeComponentProps>) => {
     );
 
     const onDragStop = useCallback(
-      (event: DraggableEvent) => {
+      (event: DraggableEvent) =>
+      {
         // onDragStop also gets called when user just clicks on a node.
         // Because of that we set dragging to true inside the onDrag handler and handle the click here
-        if (!isDragging) {
-          if (isSelectable && !selectNodesOnDrag && !selected) {
+        if (!isDragging)
+        {
+          if (isSelectable && !selectNodesOnDrag && !selected)
+          {
             addSelectedElements(node);
           }
 
@@ -196,22 +219,27 @@ export default (NodeComponent: ComponentType<NodeComponentProps>) => {
     );
 
     const onNodeDoubleClickHandler = useCallback(
-      (event: MouseEvent) => {
+      (event: MouseEvent) =>
+      {
         onNodeDoubleClick?.(event, node);
       },
       [node, onNodeDoubleClick]
     );
 
-    useLayoutEffect(() => {
+    useLayoutEffect(() =>
+    {
       // the resize observer calls an updateNodeDimensions initially.
       // We don't need to force another dimension update if it hasn't happened yet
-      if (nodeElement.current && !isHidden && observerInitialized.current) {
+      if (nodeElement.current && !isHidden && observerInitialized.current)
+      {
         updateNodeDimensions([{ id, nodeElement: nodeElement.current, forceUpdate: true }]);
       }
     }, [id, isHidden, sourcePosition, targetPosition]);
 
-    useEffect(() => {
-      if (nodeElement.current) {
+    useEffect(() =>
+    {
+      if (nodeElement.current)
+      {
         observerInitialized.current = true;
         const currNode = nodeElement.current;
         resizeObserver?.observe(currNode);
@@ -220,7 +248,8 @@ export default (NodeComponent: ComponentType<NodeComponentProps>) => {
       }
     }, []);
 
-    if (isHidden) {
+    if (isHidden)
+    {
       return null;
     }
 

@@ -31,15 +31,20 @@ const nodeTypes = {
   selectorNode: ColorSelectorNode,
 };
 
-const CustomNodeFlow = () => {
+const CustomNodeFlow = () =>
+{
   const [elements, setElements] = useState<Elements>([]);
   const [bgColor, setBgColor] = useState<string>(initBgColor);
 
-  useEffect(() => {
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+  useEffect(() =>
+  {
+    const onChange = (event: ChangeEvent<HTMLInputElement>) =>
+    {
       setElements((els) =>
-        els.map((e) => {
-          if (isEdge(e) || e.id !== '2') {
+        els.map((e) =>
+        {
+          if (isEdge(e) || e.id !== '2')
+          {
             return e;
           }
 
@@ -67,6 +72,13 @@ const CustomNodeFlow = () => {
         sourcePosition: Position.Right,
       },
       {
+        id: '11',
+        type: 'input',
+        data: { label: 'An input node' },
+        position: { x: 0, y: 100 },
+        sourcePosition: Position.Right,
+      },
+      {
         id: '2',
         type: 'selectorNode',
         data: { onChange: onChange, color: initBgColor },
@@ -88,15 +100,17 @@ const CustomNodeFlow = () => {
         targetPosition: Position.Left,
       },
 
-      { id: 'e1-2', source: '1', target: '2', animated: true, style: { stroke: '#fff' } },
-      { id: 'e2a-3', source: '2', sourceHandle: 'a', target: '3', animated: true, style: { stroke: '#fff' } },
-      { id: 'e2b-4', source: '2', sourceHandle: 'b', target: '4', animated: true, style: { stroke: '#fff' } },
+      { id: 'e1-2', source: '1', target: '2', targetHandle: "in1", animated: true, style: { stroke: '#fff' } },
+      { id: 'e2a-3', source: '2', sourceHandle: 'schema1', target: '3', animated: true, style: { stroke: '#fff' } },
+      { id: 'e2b-4', source: '2', sourceHandle: 'table1', target: '4', animated: true, style: { stroke: '#fff' } },
     ]);
   }, []);
 
   const onElementsRemove = (elementsToRemove: Elements) => setElements((els) => removeElements(elementsToRemove, els));
   const onConnect = (params: Connection | Edge) =>
     setElements((els) => addEdge({ ...params, animated: true, style: { stroke: '#fff' } }, els));
+
+  console.log(elements)
 
   return (
     <ReactFlow
@@ -114,14 +128,16 @@ const CustomNodeFlow = () => {
       defaultZoom={1.5}
     >
       <MiniMap
-        nodeStrokeColor={(n: Node): string => {
+        nodeStrokeColor={(n: Node): string =>
+        {
           if (n.type === 'input') return '#0041d0';
           if (n.type === 'selectorNode') return bgColor;
           if (n.type === 'output') return '#ff0072';
 
           return '#eee';
         }}
-        nodeColor={(n: Node): string => {
+        nodeColor={(n: Node): string =>
+        {
           if (n.type === 'selectorNode') return bgColor;
 
           return '#fff';

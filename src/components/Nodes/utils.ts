@@ -1,7 +1,13 @@
 import { HandleElement, Position } from '../../types';
 import { getDimensions } from '../../utils';
 
-export const getHandleBounds = (nodeElement: HTMLDivElement, scale: number) => {
+
+import { FaWarehouse } from 'react-icons/fa'
+import { MdFunctions } from 'react-icons/md'
+import { HiOutlineDatabase, HiOutlineTable, HiOutlineTemplate } from 'react-icons/hi'
+
+export const getHandleBounds = (nodeElement: HTMLDivElement, scale: number) =>
+{
   const bounds = nodeElement.getBoundingClientRect();
 
   return {
@@ -15,17 +21,20 @@ export const getHandleBoundsByHandleType = (
   nodeElement: HTMLDivElement,
   parentBounds: ClientRect | DOMRect,
   k: number
-): HandleElement[] | null => {
+): HandleElement[] | null =>
+{
   const handles = nodeElement.querySelectorAll(selector);
 
-  if (!handles || !handles.length) {
+  if (!handles || !handles.length)
+  {
     return null;
   }
 
   const handlesArray = Array.from(handles) as HTMLDivElement[];
 
   return handlesArray.map(
-    (handle): HandleElement => {
+    (handle): HandleElement =>
+    {
       const bounds = handle.getBoundingClientRect();
       const dimensions = getDimensions(handle);
       const handleId = handle.getAttribute('data-handleid');

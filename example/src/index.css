@@ -1,6 +1,5 @@
 body {
   font-family: sans-serif;
-  color: #111;
 }
 
 html,
@@ -79,4 +78,8 @@ header select {
   .overview-example__add {
     display: block;
   }
+}
+
+.card {
+  margin-bottom: 10px;
 }
