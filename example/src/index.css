@@ -83,3 +83,7 @@ header select {
 .card {
   margin-bottom: 10px;
 }
+
+.react-flow__edge-path {
+  transform: rotateZ(360deg)
+}

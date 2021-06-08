@@ -8,10 +8,11 @@ import InputNode from '../../components/Nodes/InputNode';
 import OutputNode from '../../components/Nodes/OutputNode';
 import { createNodeTypes } from '../NodeRenderer/utils';
 import SelectionListener from '../../components/SelectionListener';
-import { BezierEdge, StepEdge, SmoothStepEdge, StraightEdge } from '../../components/Edges';
+import { BezierEdge, StepEdge, SmoothStepEdge, StraightEdge, PermissionEdge } from '../../components/Edges';
 import { createEdgeTypes } from '../EdgeRenderer/utils';
 import Wrapper from './Wrapper';
-import {
+import
+{
   Elements,
   NodeTypesType,
   EdgeTypesType,
@@ -45,11 +46,13 @@ const defaultNodeTypes = {
 const defaultEdgeTypes = {
   default: BezierEdge,
   straight: StraightEdge,
+  permission: PermissionEdge,
   step: StepEdge,
   smoothstep: SmoothStepEdge,
 };
 
-export interface ReactFlowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onLoad'> {
+export interface ReactFlowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onLoad'>
+{
   elements: Elements;
   onElementClick?: (event: MouseEvent, element: Node | Edge) => void;
   onElementsRemove?: (elements: Elements) => void;
@@ -200,10 +203,13 @@ const ReactFlow = forwardRef<ReactFlowRefType, ReactFlowProps>(
       ...rest
     },
     ref
-  ) => {
+  ) =>
+  {
     const nodeTypesParsed = useMemo(() => createNodeTypes(nodeTypes), [nodeTypesId]);
     const edgeTypesParsed = useMemo(() => createEdgeTypes(edgeTypes), [edgeTypesId]);
     const reactFlowClasses = cc(['react-flow', className]);
+
+    console.log({ reactflowElements: elements })
 
     return (
       <div {...rest} ref={ref} className={reactFlowClasses}>

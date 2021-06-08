@@ -11,6 +11,8 @@ const initialPolicyView: any = [
 ]
 
 
+
+
 const KrakenUI = ({
   viewSettings = {}
 }) =>
@@ -29,7 +31,7 @@ const KrakenUI = ({
 
 
   return (
-    <div className="dndflow">
+    <div className="kraken-ui">
       <KrakenModeler
         onUpdate={onUpdate}
         onSavePolicyView={onSavePolicyView}

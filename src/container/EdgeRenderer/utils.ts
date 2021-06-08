@@ -1,25 +1,28 @@
 import { ComponentType } from 'react';
 
-import { BezierEdge, StepEdge, SmoothStepEdge, StraightEdge } from '../../components/Edges';
+import { BezierEdge, StepEdge, SmoothStepEdge, StraightEdge, PermissionEdge } from '../../components/Edges';
 import wrapEdge from '../../components/Edges/wrapEdge';
 import { rectToBox } from '../../utils/graph';
 
-import {
-  EdgeTypesType,
-  EdgeProps,
-  Position,
-  Node,
-  XYPosition,
-  ElementId,
-  HandleElement,
-  Transform,
-  Edge,
-} from '../../types';
+import
+  {
+    EdgeTypesType,
+    EdgeProps,
+    Position,
+    Node,
+    XYPosition,
+    ElementId,
+    HandleElement,
+    Transform,
+    Edge,
+  } from '../../types';
 
-export function createEdgeTypes(edgeTypes: EdgeTypesType): EdgeTypesType {
+export function createEdgeTypes(edgeTypes: EdgeTypesType): EdgeTypesType
+{
   const standardTypes: EdgeTypesType = {
     default: wrapEdge((edgeTypes.default || BezierEdge) as ComponentType<EdgeProps>),
     straight: wrapEdge((edgeTypes.bezier || StraightEdge) as ComponentType<EdgeProps>),
+    permission: wrapEdge((edgeTypes.bezier || PermissionEdge) as ComponentType<EdgeProps>),
     step: wrapEdge((edgeTypes.step || StepEdge) as ComponentType<EdgeProps>),
     smoothstep: wrapEdge((edgeTypes.step || SmoothStepEdge) as ComponentType<EdgeProps>),
   };
@@ -27,7 +30,8 @@ export function createEdgeTypes(edgeTypes: EdgeTypesType): EdgeTypesType {
   const wrappedTypes = {} as EdgeTypesType;
   const specialTypes: EdgeTypesType = Object.keys(edgeTypes)
     .filter((k) => !['default', 'bezier'].includes(k))
-    .reduce((res, key) => {
+    .reduce((res, key) =>
+    {
       res[key] = wrapEdge((edgeTypes[key] || BezierEdge) as ComponentType<EdgeProps>);
 
       return res;
@@ -39,13 +43,15 @@ export function createEdgeTypes(edgeTypes: EdgeTypesType): EdgeTypesType {
   };
 }
 
-export function getHandlePosition(position: Position, node: Node, handle: any | null = null): XYPosition {
+export function getHandlePosition(position: Position, node: Node, handle: any | null = null): XYPosition
+{
   const x = (handle?.x || 0) + node.__rf.position.x;
   const y = (handle?.y || 0) + node.__rf.position.y;
   const width = handle?.width || node.__rf.width;
   const height = handle?.height || node.__rf.height;
 
-  switch (position) {
+  switch (position)
+  {
     case Position.Top:
       return {
         x: x + width / 2,
@@ -69,24 +75,29 @@ export function getHandlePosition(position: Position, node: Node, handle: any | 
   }
 }
 
-export function getHandle(bounds: HandleElement[], handleId: ElementId | null): HandleElement | null {
-  if (!bounds) {
+export function getHandle(bounds: HandleElement[], handleId: ElementId | null): HandleElement | null
+{
+  if (!bounds)
+  {
     return null;
   }
 
   // there is no handleId when there are no multiple handles/ handles with ids
   // so we just pick the first one
   let handle = null;
-  if (bounds.length === 1 || !handleId) {
+  if (bounds.length === 1 || !handleId)
+  {
     handle = bounds[0];
-  } else if (handleId) {
+  } else if (handleId)
+  {
     handle = bounds.find((d) => d.id === handleId);
   }
 
   return typeof handle === 'undefined' ? null : handle;
 }
 
-interface EdgePositions {
+interface EdgePositions
+{
   sourceX: number;
   sourceY: number;
   targetX: number;
@@ -100,7 +111,8 @@ export const getEdgePositions = (
   targetNode: Node,
   targetHandle: HandleElement | unknown,
   targetPosition: Position
-): EdgePositions => {
+): EdgePositions =>
+{
   const sourceHandlePos = getHandlePosition(sourcePosition, sourceNode, sourceHandle);
   const targetHandlePos = getHandlePosition(targetPosition, targetNode, targetHandle);
 
@@ -112,7 +124,8 @@ export const getEdgePositions = (
   };
 };
 
-interface IsEdgeVisibleParams {
+interface IsEdgeVisibleParams
+{
   sourcePos: XYPosition;
   targetPos: XYPosition;
   width: number;
@@ -120,7 +133,8 @@ interface IsEdgeVisibleParams {
   transform: Transform;
 }
 
-export function isEdgeVisible({ sourcePos, targetPos, width, height, transform }: IsEdgeVisibleParams): boolean {
+export function isEdgeVisible({ sourcePos, targetPos, width, height, transform }: IsEdgeVisibleParams): boolean
+{
   const edgeBox = {
     x: Math.min(sourcePos.x, targetPos.x),
     y: Math.min(sourcePos.y, targetPos.y),
@@ -128,11 +142,13 @@ export function isEdgeVisible({ sourcePos, targetPos, width, height, transform }
     y2: Math.max(sourcePos.y, targetPos.y),
   };
 
-  if (edgeBox.x === edgeBox.x2) {
+  if (edgeBox.x === edgeBox.x2)
+  {
     edgeBox.x2 += 1;
   }
 
-  if (edgeBox.y === edgeBox.y2) {
+  if (edgeBox.y === edgeBox.y2)
+  {
     edgeBox.y2 += 1;
   }
 
@@ -155,13 +171,17 @@ type SourceTargetNode = {
   targetNode: Node | null;
 };
 
-export const getSourceTargetNodes = (edge: Edge, nodes: Node[]): SourceTargetNode => {
+export const getSourceTargetNodes = (edge: Edge, nodes: Node[]): SourceTargetNode =>
+{
   return nodes.reduce(
-    (res, node) => {
-      if (node.id === edge.source) {
+    (res, node) =>
+    {
+      if (node.id === edge.source)
+      {
         res.sourceNode = node;
       }
-      if (node.id === edge.target) {
+      if (node.id === edge.target)
+      {
         res.targetNode = node;
       }
       return res;

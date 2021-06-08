@@ -1,12 +1,12 @@
-import React, { memo, FC, CSSProperties } from 'react';
+import React, { memo, FC, useState } from 'react';
 
-import { Card, Container, Row, Col } from 'react-bootstrap'
+import { Card, Container, Row, Col, Collapse, Button } from 'react-bootstrap'
 
 import { FaWarehouse, FaEye } from 'react-icons/fa'
 import { MdFunctions } from 'react-icons/md'
 import { HiOutlineDatabase, HiOutlineTable, HiOutlineTemplate } from 'react-icons/hi'
 import { RiChatSmileLine } from 'react-icons/ri'
-import { AiOutlineCloudServer } from 'react-icons/ai'
+import { AiOutlineCloudServer, AiOutlineMinusSquare } from 'react-icons/ai'
 
 import Handle from '../Handle';
 import { NodeProps, Position, Connection, Edge } from '../../types';
@@ -21,7 +21,15 @@ const onConnect = (params: Connection | Edge) => console.log('handle onConnect',
 
 const SecurableGroupNode: FC<NodeProps> = ({ data }) =>
 {
-  const getObjectCards = ({ label, securableObjects, connector_type }: any) =>
+  const [secObjects, setSecObjects] = useState(data.securableObjects);
+
+  const onCollapseClick = () =>
+  {
+    console.log("collapse clicked")
+  }
+  //console.log({ data })
+
+  const getObjectCards = ({ label, connector_type }: any) =>
   {
     //console.log({ securableObjects, connector_type, data })
     const topHierarchy = objectTypeHierarchy[connector_type]
@@ -31,26 +39,30 @@ const SecurableGroupNode: FC<NodeProps> = ({ data }) =>
       let cardArr = []
       //console.log({ hierarchy, parentId })
       // loop through the hierarchy to find object types and then loop through securable objects to get those
+      let rowArr = []
       for (const obj in hierarchy)
       {
+        //console.log({ obj })
         let { type: objType, children, icon, level } = hierarchy[obj]  // type here is { type: 'securable' }
         //console.log({ children })
         // obj is going to be something like 'warehouse'
         let counter: number = 0
-        const colNum = 15
+        const colNum = 5
 
-        let rowArr = []
 
-        for (let so = 0; so < securableObjects.length; so++)
+        let inLoopArr = false
+
+        for (let so = 0; so < data.securableObjects?.length; so++)
         {
-          const { type, identifier, name, _id } = securableObjects[so]
+          const { type, identifier, name, _id } = data.securableObjects[so]
           if (type === obj && identifier.startsWith(parentId))
           {
+            //console.log({ identifier })
             rowArr.push(
-              <Col>
+              <Col key={`${obj}_${getRandomNum(1000000000, 9999999999)}`}>
                 <Card className={`card-${obj}`}>
                   <Card.Header>
-                    <Handle type="target" position={Position.Left} id={type + "-" + _id} style={targetHandleStyle} onConnect={onConnect} isConnectable={true} />
+                    <Handle type="target" position={Position.Left} id={type + "-" + identifier} style={targetHandleStyle} onConnect={onConnect} isConnectable={true} />
                     <i>{icon}</i>   {name}
                   </Card.Header>
                   <Card.Body>
@@ -59,23 +71,30 @@ const SecurableGroupNode: FC<NodeProps> = ({ data }) =>
                 </Card>
               </Col>
             )
+            //console.log({ indetifier2: identifier, level, rowArr, so, secObjsLen: securableObjects.length })
+            if (level === 1 && ++counter % colNum == 0)
+            {
+              console.log("level 1 push")
+              cardArr.push(<Row key={`${obj}_${_id}`}>{rowArr}</Row>)
+
+              rowArr = []
+            }
           }
 
-
-
-          if (counter++ % colNum == 0)
+          if (level !== 1 && so == data.securableObjects?.length - 1 && rowArr.length > 0)
           {
-            if (level === 1)
-              cardArr.push(<Row key={`${obj}_${_id}`}>{rowArr}</Row>)
-            else
-              cardArr.push(<span key={`${obj}_${_id}`}>{rowArr}</span>)
+            //console.log("lower level push")
+            cardArr.push(<Row key={`${obj}_${_id}`}>{rowArr}</Row>)
 
             rowArr = []
           }
         }
-        if (counter % colNum != 0)
+        if (level === 1 && rowArr.length > 0 && ++counter % colNum != 0)
         {
-          cardArr.push(<Row key={obj}>{rowArr}</Row>)
+          //console.log("outer level 1 push")
+          cardArr.push(<Row key={`${obj}_${getRandomNum(1000000000, 9999999999)}`}>{rowArr}</Row>)
+
+          rowArr = []
         }
       }
 
@@ -89,6 +108,9 @@ const SecurableGroupNode: FC<NodeProps> = ({ data }) =>
         <Card.Header>
           <Handle type="target" position={Position.Left} id="account" style={targetHandleStyle} onConnect={onConnect} isConnectable={true} />
           <i><AiOutlineCloudServer /></i>    {data.label}
+
+          <i style={{ position: 'relative', left: 1050 }}><AiOutlineMinusSquare /></i>
+
         </Card.Header>
         <Card.Body>
           {getSubObjectCards(topHierarchy)}

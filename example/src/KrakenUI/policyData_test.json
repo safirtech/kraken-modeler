@@ -76,15 +76,148 @@
           "USAGE;DATABASE;TEST1;false",
           "USAGE;SCHEMA;TEST1.USER_SCHEMA;false",
           "USAGE;SCHEMA;TEST2.USER_SCHEMA;false",
-          "DELETE;TABLE;TEST1.USER_SCHEMA.USERS;false",
-          "INSERT;TABLE;TEST1.USER_SCHEMA.USERS;false",
-          "REBUILD;TABLE;TEST1.USER_SCHEMA.USERS;false",
-          "REFERENCES;TABLE;TEST1.USER_SCHEMA.USERS;false",
           "SELECT;TABLE;TEST1.USER_SCHEMA.USERS;false",
-          "TRUNCATE;TABLE;TEST1.USER_SCHEMA.USERS;false",
-          "UPDATE;TABLE;TEST1.USER_SCHEMA.USERS;false",
-          "SELECT;TABLE;TEST2.USER_SCHEMA.USERS;false",
+          "SELECT;TABLE;TEST2.USER_SCHEMA.USERS;false"
+        ],
+        "hasGrants": true
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf70be6f1965f5070044e",
+        "name": "KRAKEN_DB",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "database",
+        "identifier": "KRAKEN_DB"
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf70be6f1965f5070044b",
+        "name": "TEST1",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "database",
+        "identifier": "TEST1"
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf70be6f1965f50700450",
+        "name": "TEST_WH",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "warehouse",
+        "identifier": "TEST_WH"
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf70be6f1965f5070044c",
+        "name": "TEST2",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "database",
+        "identifier": "TEST2"
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf70ce6f1965f50700461",
+        "name": "INFORMATION_SCHEMA",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "schema",
+        "identifier": "TEST1.INFORMATION_SCHEMA"
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf710e6f1965f507004d2",
+        "name": "USERS",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "table",
+        "identifier": "TEST1.USER_SCHEMA.USERS"
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf70ce6f1965f50700463",
+        "name": "USER_SCHEMA",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "schema",
+        "identifier": "TEST1.USER_SCHEMA"
+      }
+    ]
+  },
+  {
+    "state": "ACTIVE",
+    "_id": "fake1234",
+    "name": "ar465747.west-us-1.azure",
+    "connector_id": "6052c48c38dd841fbc655ace",
+    "connector_type": "snowflake",
+    "identifier": "ar465747",
+    "objects": [
+      {
+        "state": "ACTIVE",
+        "_id": "605cf709e6f1965f50700443",
+        "name": "KRAKEN",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "role",
+        "identifier": "KRAKEN",
+        "x_comment": "",
+        "x_owner": "ACCOUNTADMIN",
+        "is_grantee": true,
+        "grants": [
+          "USAGE;DATABASE;KRAKEN_DB;false",
+          "CREATE SCHEMA;DATABASE;TEST2;true",
+          "MODIFY;DATABASE;TEST2;true",
+          "MONITOR;DATABASE;TEST2;true",
+          "REFERENCE_USAGE;DATABASE;TEST2;true",
+          "USAGE;DATABASE;TEST2;true",
+          "USAGE;ROLE;ANALYST;false",
+          "USAGE;ROLE;ANALYST2;false",
+          "USAGE;SCHEMA;KRAKEN_DB.DEMO_SCHEMA;false",
+          "SELECT;VIEW;KRAKEN_DB.DEMO_SCHEMA.ACCUWEATHER_DAILY_FORECAST_DEMO;false",
           "USAGE;WAREHOUSE;TEST_WH;false"
+        ],
+        "hasGrants": true
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf70be6f1965f50700447",
+        "name": "USERADMIN",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "role",
+        "identifier": "USERADMIN",
+        "x_comment": "User administrator can create and manage users and roles",
+        "x_owner": "",
+        "is_grantee": true,
+        "grants": [
+          "CREATE ROLE;ACCOUNT;AR27750;true",
+          "CREATE USER;ACCOUNT;AR27750;true",
+          "DELETE;TABLE;TEST1.USER_SCHEMA.USERS;true",
+          "INSERT;TABLE;TEST1.USER_SCHEMA.USERS;true",
+          "REBUILD;TABLE;TEST1.USER_SCHEMA.USERS;true",
+          "REFERENCES;TABLE;TEST1.USER_SCHEMA.USERS;true",
+          "SELECT;TABLE;TEST1.USER_SCHEMA.USERS;true",
+          "TRUNCATE;TABLE;TEST1.USER_SCHEMA.USERS;true",
+          "UPDATE;TABLE;TEST1.USER_SCHEMA.USERS;true",
+          "DELETE;TABLE;TEST2.USER_SCHEMA.USERS;true",
+          "INSERT;TABLE;TEST2.USER_SCHEMA.USERS;true",
+          "REBUILD;TABLE;TEST2.USER_SCHEMA.USERS;true",
+          "REFERENCES;TABLE;TEST2.USER_SCHEMA.USERS;true",
+          "SELECT;TABLE;TEST2.USER_SCHEMA.USERS;true",
+          "TRUNCATE;TABLE;TEST2.USER_SCHEMA.USERS;true",
+          "UPDATE;TABLE;TEST2.USER_SCHEMA.USERS;true"
+        ],
+        "hasGrants": true
+      },
+      {
+        "state": "ACTIVE",
+        "_id": "605cf707e6f1965f5070043d",
+        "name": "ANALYST",
+        "connector_id": "6052c48c38dd841fbc655ace",
+        "type": "role",
+        "identifier": "ANALYST",
+        "x_comment": "",
+        "x_owner": "ACCOUNTADMIN",
+        "is_grantee": true,
+        "grants": [
+          "USAGE;DATABASE;TEST1;false",
+          "USAGE;SCHEMA;TEST1.USER_SCHEMA;false",
+          "USAGE;SCHEMA;TEST2.USER_SCHEMA;false",
+          "SELECT;TABLE;TEST1.USER_SCHEMA.USERS;false",
+          "SELECT;TABLE;TEST2.USER_SCHEMA.USERS;false"
         ],
         "hasGrants": true
       },
